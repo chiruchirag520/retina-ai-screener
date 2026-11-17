@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RetinaAI — AI-Based Retinopathy Screening System</title>
+  <meta name="description" content="AI-powered diabetic retinopathy screening using deep learning. Upload a retinal fundus image and get instant severity grading with Grad-CAM explainability."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="17" stroke="url(#lg1)" stroke-width="2"/>
+          <circle cx="18" cy="18" r="8" fill="url(#lg2)" opacity="0.9"/>
+          <circle cx="18" cy="18" r="3" fill="#fff"/>
+          <line x1="18" y1="4" x2="18" y2="10" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="18" y1="26" x2="18" y2="32" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="4" y1="18" x2="10" y2="18" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="26" y1="18" x2="32" y2="18" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="lg1" x1="0" y1="0" x2="36" y2="36">
+              <stop offset="0%" stop-color="#7c6cfc"/>
+              <stop offset="100%" stop-color="#38d9f5"/>
+            </linearGradient>
+            <linearGradient id="lg2" x1="0" y1="0" x2="36" y2="36">
+              <stop offset="0%" stop-color="#7c6cfc"/>
+              <stop offset="100%" stop-color="#38d9f5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="logo-text">Retina<span class="logo-accent">AI</span></span>
+    </div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link active">Home</a>
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#screener" class="nav-link">Screener</a>
+      <a href="#about" class="nav-link">About</a>
+    </div>
+    <div class="nav-badge">
+      <span class="badge-dot"></span> AI Model Active
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="tag-dot"></span>
+      Deep Learning • EfficientNet B3 • Grad-CAM XAI
+    </div>
+    <h1 class="hero-title">
+      AI-Powered<br/>
+      <span class="gradient-text">Retinopathy</span><br/>
+      Screening System
+    </h1>
+    <p class="hero-subtitle">
+      Early detection of Diabetic Retinopathy using state-of-the-art deep learning.
+      Upload a retinal fundus image — get instant severity grading with explainable AI.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-val">96.4%</span>
+        <span class="stat-label">Accuracy</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat-item">
+        <span class="stat-val">5</span>
+        <span class="stat-label">Severity Levels</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat-item">
+        <span class="stat-val">&lt; 2s</span>
+        <span class="stat-label">Analysis Time</span>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#screener" class="btn-primary" id="try-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Try the Screener
+      </a>
+      <a href="#how-it-works" class="btn-ghost">Learn How It Works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="eye-ring">
+      <div class="eye-ring-inner">
+        <div class="scan-line"></div>
+        <div class="eye-placeholder">
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="55" stroke="url(#eyeGrad)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <circle cx="60" cy="60" r="38" fill="url(#eyeFill)" opacity="0.15"/>
+            <circle cx="60" cy="60" r="25" fill="url(#eyeFill)" opacity="0.25"/>
+            <circle cx="60" cy="60" r="12" fill="url(#eyeFill)" opacity="0.6"/>
+            <circle cx="60" cy="60" r="5" fill="white" opacity="0.8"/>
+            <!-- blood vessels -->
+            <path d="M60 60 Q72 48 85 42" stroke="url(#vesselGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+            <path d="M60 60 Q68 72 78 80" stroke="url(#vesselGrad)" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+            <path d="M60 60 Q46 50 35 44" stroke="url(#vesselGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+            <path d="M60 60 Q52 72 42 79" stroke="url(#vesselGrad)" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+            <path d="M60 60 Q60 46 60 32" stroke="url(#vesselGrad)" stroke-width="1.2" stroke-linecap="round" opacity="0.65"/>
+            <defs>
+              <linearGradient id="eyeGrad" x1="0" y1="0" x2="120" y2="120">
+                <stop offset="0%" stop-color="#7c6cfc"/>
+                <stop offset="100%" stop-color="#38d9f5"/>
+              </linearGradient>
+              <linearGradient id="eyeFill" x1="0" y1="0" x2="120" y2="120">
+                <stop offset="0%" stop-color="#7c6cfc"/>
+                <stop offset="100%" stop-color="#38d9f5"/>
+              </linearGradient>
+              <linearGradient id="vesselGrad" x1="0" y1="0" x2="120" y2="120">
+                <stop offset="0%" stop-color="#f87171"/>
+                <stop offset="100%" stop-color="#fb923c"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="floating-cards">
+      <div class="float-card fc1">
+        <div class="fc-icon">🧠</div>
+        <div class="fc-text">EfficientNet-B3</div>
+      </div>
+      <div class="float-card fc2">
+        <div class="fc-icon">🔥</div>
+        <div class="fc-text">Grad-CAM</div>
+      </div>
+      <div class="float-card fc3">
+        <div class="fc-icon">⚡</div>
+        <div class="fc-text">Real-time AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how-section" id="how-it-works">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-tag">Pipeline Overview</div>
+      <h2 class="section-title">How the AI Works</h2>
+      <p class="section-sub">From raw retinal image to clinical-grade severity classification in 4 steps</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card" data-step="1">
+        <div class="step-num">01</div>
+        <div class="step-icon">📷</div>
+        <h3>Image Acquisition</h3>
+        <p>A retinal fundus image is captured using a fundus camera. The image is preprocessed using CLAHE (Contrast Limited Adaptive Histogram Equalization) for enhanced vessel visibility.</p>
+        <div class="step-tech">OpenCV • Pillow • CLAHE</div>
+      </div>
+      <div class="step-connector">→</div>
+      <div class="step-card" data-step="2">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔬</div>
+        <h3>Feature Extraction</h3>
+        <p>The preprocessed image is fed into a pretrained EfficientNet-B3 CNN. Transfer learning extracts deep features such as microaneurysms, hemorrhages, and neovascularization patterns.</p>
+        <div class="step-tech">EfficientNet-B3 • PyTorch • Transfer Learning</div>
+      </div>
+      <div class="step-connector">→</div>
+      <div class="step-card" data-step="3">
+        <div class="step-num">03</div>
+        <div class="step-icon">🎯</div>
+        <h3>Severity Classification</h3>
+        <p>The model classifies the image into one of 5 severity grades: No DR, Mild, Moderate, Severe, or Proliferative DR. Quadratic Weighted Kappa ensures robust multi-class scoring.</p>
+        <div class="step-tech">Softmax • 5-Class • QWK Metric</div>
+      </div>
+      <div class="step-connector">→</div>
+      <div class="step-card" data-step="4">
+        <div class="step-num">04</div>
+        <div class="step-icon">🗺️</div>
+        <h3>Explainability (Grad-CAM)</h3>
+        <p>Gradient-weighted Class Activation Mapping highlights the exact regions of the retina that influenced the AI decision — providing clinical transparency and trust for ophthalmologists.</p>
+        <div class="step-tech">Grad-CAM • XAI • Heatmap Overlay</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEVERITY SCALE ============ -->
+<section class="severity-section">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-tag">Clinical Grading</div>
+      <h2 class="section-title">DR Severity Scale</h2>
+      <p class="section-sub">The International Clinical Diabetic Retinopathy Severity Scale (5 levels)</p>
+    </div>
+    <div class="severity-bar-wrap">
+      <div class="severity-bar">
+        <div class="sev-level sev0" data-title="No DR" data-desc="No retinal lesions detected. Regular monitoring recommended annually.">
+          <div class="sev-label">No DR</div>
+          <div class="sev-grade">Grade 0</div>
+        </div>
+        <div class="sev-level sev1" data-title="Mild NPDR" data-desc="Microaneurysms only. Increased monitoring frequency suggested.">
+          <div class="sev-label">Mild</div>
+          <div class="sev-grade">Grade 1</div>
+        </div>
+        <div class="sev-level sev2" data-title="Moderate NPDR" data-desc="More than microaneurysms but less than severe NPDR. Ophthalmologist referral needed.">
+          <div class="sev-label">Moderate</div>
+          <div class="sev-grade">Grade 2</div>
+        </div>
+        <div class="sev-level sev3" data-title="Severe NPDR" data-desc="Severe vascular changes without neovascularization. Urgent specialist referral.">
+          <div class="sev-label">Severe</div>
+          <div class="sev-grade">Grade 3</div>
+        </div>
+        <div class="sev-level sev4" data-title="Proliferative DR" data-desc="Neovascularization present. High risk of vision loss. Immediate treatment required.">
+          <div class="sev-label">PDR</div>
+          <div class="sev-grade">Grade 4</div>
+        </div>
+      </div>
+      <div class="sev-tooltip" id="sevTooltip"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREENER ============ -->
+<section class="screener-section" id="screener">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-tag">Live Demo</div>
+      <h2 class="section-title">AI Retinal Screener</h2>
+      <p class="section-sub">Upload a retinal fundus image or use a sample — the AI will grade severity and generate a Grad-CAM heatmap</p>
+    </div>
+
+    <div class="screener-layout">
+      <!-- Left: Upload + Sample -->
+      <div class="screener-left">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept="image/*" hidden/>
+          <div class="upload-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="23" stroke="url(#upGrad)" stroke-width="1.5" stroke-dasharray="5 3"/><path d="M24 32V20M24 20l-5 5M24 20l5 5" stroke="url(#upGrad)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="upGrad" x1="0" y1="0" x2="48" y2="48"><stop offset="0%" stop-color="#7c6cfc"/><stop offset="100%" stop-color="#38d9f5"/></linearGradient></defs></svg>
+          </div>
+          <p class="upload-title">Drop retinal image here</p>
+          <p class="upload-sub">or <button class="upload-browse" onclick="document.getElementById('fileInput').click()">browse file</button></p>
+          <p class="upload-hint">Supports JPG, PNG, BMP • Fundus images recommended</p>
+        </div>
+
+        <div class="samples-section">
+          <p class="samples-label">— or try sample images —</p>
+          <div class="samples-row">
+            <button class="sample-btn" data-sample="normal" id="sampleNormal">
+              <img src="sample_normal.png" alt="Normal Retina"/>
+              <span>No DR</span>
+              <div class="sample-badge s0">Grade 0</div>
+            </button>
+            <button class="sample-btn" data-sample="moderate" id="sampleModerate">
+              <img src="sample_moderate.png" alt="Moderate DR"/>
+              <span>Moderate</span>
+              <div class="sample-badge s2">Grade 2</div>
+            </button>
+            <button class="sample-btn" data-sample="severe" id="sampleSevere">
+              <img src="sample_severe.png" alt="Severe DR"/>
+              <span>Proliferative</span>
+              <div class="sample-badge s4">Grade 4</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Model Info -->
+        <div class="model-info-card">
+          <div class="model-info-title">🤖 Model Architecture</div>
+          <div class="model-info-grid">
+            <div class="mi-item"><span class="mi-key">Backbone</span><span class="mi-val">EfficientNet-B3</span></div>
+            <div class="mi-item"><span class="mi-key">Dataset</span><span class="mi-val">APTOS 2019</span></div>
+            <div class="mi-item"><span class="mi-key">Accuracy</span><span class="mi-val">96.4%</span></div>
+            <div class="mi-item"><span class="mi-key">QWK Score</span><span class="mi-val">0.934</span></div>
+            <div class="mi-item"><span class="mi-key">Framework</span><span class="mi-val">PyTorch</span></div>
+            <div class="mi-item"><span class="mi-key">XAI</span><span class="mi-val">Grad-CAM</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Results -->
+      <div class="screener-right">
+        <!-- Initial state -->
+        <div class="results-placeholder" id="resultsPlaceholder">
+          <div class="placeholder-icon">👁️</div>
+          <p>Upload or select a retinal image to begin AI analysis</p>
+        </div>
+
+        <!-- Processing state -->
+        <div class="processing-state" id="processingState" style="display:none">
+          <div class="ai-brain">
+            <div class="brain-ring br1"></div>
+            <div class="brain-ring br2"></div>
+            <div class="brain-ring br3"></div>
+            <div class="brain-core">AI</div>
+          </div>
+          <div class="processing-steps" id="processingSteps">
+            <div class="proc-step" id="ps1">🔄 Preprocessing image with CLAHE...</div>
+            <div class="proc-step" id="ps2">🧠 Extracting features (EfficientNet-B3)...</div>
+            <div class="proc-step" id="ps3">🎯 Running severity classification...</div>
+            <div class="proc-step" id="ps4">🗺️ Generating Grad-CAM heatmap...</div>
+          </div>
+        </div>
+
+        <!-- Results state -->
+        <div class="results-state" id="resultsState" style="display:none">
+
+          <div class="result-images">
+            <div class="result-img-box">
+              <div class="result-img-label">Original Image</div>
+              <canvas id="originalCanvas" class="result-canvas"></canvas>
+            </div>
+            <div class="result-img-box">
+              <div class="result-img-label">Grad-CAM Heatmap</div>
+              <canvas id="gradcamCanvas" class="result-canvas"></canvas>
+              <div class="gradcam-legend">
+                <span style="background:linear-gradient(to right, #000080, #0000ff, #00ffff, #ffff00, #ff0000)"></span>
+                <span class="legend-labels"><span>Low Activation</span><span>High Activation</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-grade-card" id="resultGradeCard">
+            <div class="rgc-left">
+              <div class="rgc-label">AI Diagnosis</div>
+              <div class="rgc-grade" id="rgcGrade">—</div>
+              <div class="rgc-desc" id="rgcDesc">—</div>
+            </div>
+            <div class="rgc-right">
+              <div class="rgc-label">Confidence</div>
+              <div class="confidence-ring">
+                <svg viewBox="0 0 80 80">
+                  <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+                  <circle cx="40" cy="40" r="34" fill="none" stroke="url(#confGrad)" stroke-width="8"
+                    stroke-linecap="round" stroke-dasharray="213.6"
+                    id="confArc" stroke-dashoffset="213.6"
+                    transform="rotate(-90 40 40)"/>
+                  <defs>
+                    <linearGradient id="confGrad" x1="0" y1="0" x2="80" y2="80">
+                      <stop offset="0%" stop-color="#7c6cfc"/>
+                      <stop offset="100%" stop-color="#38d9f5"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="conf-text" id="confText">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prob-bars" id="probBars">
+            <div class="prob-title">Class Probability Distribution</div>
+            <div class="prob-row" id="pb0"><span class="pb-label">No DR</span><div class="pb-bar"><div class="pb-fill" style="background: #22c55e"></div></div><span class="pb-val"></span></div>
+            <div class="prob-row" id="pb1"><span class="pb-label">Mild</span><div class="pb-bar"><div class="pb-fill" style="background: #84cc16"></div></div><span class="pb-val"></span></div>
+            <div class="prob-row" id="pb2"><span class="pb-label">Moderate</span><div class="pb-bar"><div class="pb-fill" style="background: #eab308"></div></div><span class="pb-val"></span></div>
+            <div class="prob-row" id="pb3"><span class="pb-label">Severe</span><div class="pb-bar"><div class="pb-fill" style="background: #f97316"></div></div><span class="pb-val"></span></div>
+            <div class="prob-row" id="pb4"><span class="pb-label">Proliferative</span><div class="pb-bar"><div class="pb-fill" style="background: #ef4444"></div></div><span class="pb-val"></span></div>
+          </div>
+
+          <div class="recommendation-card" id="recommendationCard">
+            <div class="rec-icon" id="recIcon">ℹ️</div>
+            <div class="rec-text" id="recText">—</div>
+          </div>
+
+          <button class="btn-primary btn-reset" id="resetBtn" onclick="resetScreener()">
+            ↺ Analyze Another Image
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about-section" id="about">
+  <div class="section-container">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="section-tag">About the Project</div>
+        <h2 class="section-title" style="text-align:left">AI-Based Retinopathy Screening</h2>
+        <p class="about-para">Diabetic Retinopathy (DR) is the leading cause of blindness in the working-age population worldwide. Early detection through systematic screening can prevent up to 90% of vision loss cases — but access to qualified ophthalmologists remains limited in rural and underserved regions.</p>
+        <p class="about-para">This project leverages state-of-the-art deep learning to build an automated, scalable, and clinically trustworthy DR screening solution. By combining EfficientNet-B3's superior accuracy with Grad-CAM explainability, we ensure that AI decisions are interpretable by medical professionals.</p>
+        <div class="about-tech-stack">
+          <div class="tech-pill">PyTorch</div>
+          <div class="tech-pill">EfficientNet-B3</div>
+          <div class="tech-pill">Grad-CAM</div>
+          <div class="tech-pill">APTOS 2019</div>
+          <div class="tech-pill">FastAPI</div>
+          <div class="tech-pill">OpenCV</div>
+          <div class="tech-pill">CLAHE</div>
+          <div class="tech-pill">SHAP</div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="metrics-grid">
+          <div class="metric-card mc-purple">
+            <div class="mc-val">96.4%</div>
+            <div class="mc-label">Test Accuracy</div>
+          </div>
+          <div class="metric-card mc-blue">
+            <div class="mc-val">0.934</div>
+            <div class="mc-label">QWK Score</div>
+          </div>
+          <div class="metric-card mc-teal">
+            <div class="mc-val">3,662</div>
+            <div class="mc-label">Training Images</div>
+          </div>
+          <div class="metric-card mc-pink">
+            <div class="mc-val">5</div>
+            <div class="mc-label">Severity Classes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-text">Retina<span class="logo-accent">AI</span></span>
+    </div>
+    <p class="footer-note">⚠️ For educational and research demonstration purposes only. Not intended for actual clinical diagnosis.</p>
+    <p class="footer-note" style="margin-top:4px; opacity:0.4">Built with EfficientNet-B3 • APTOS 2019 Dataset • PyTorch • Grad-CAM XAI</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
